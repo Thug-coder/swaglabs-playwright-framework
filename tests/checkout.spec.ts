@@ -34,7 +34,6 @@ test.describe('Checkout Testcases', () => {
 
 test.describe('Error Messages', () => {
     test('Error messages testcases', async ({inventoryPage, cartPage, checkoutPage, standardUserWithProduct}) => {
-        await inventoryPage.addToCart('Sauce Labs Fleece Jacket');
         await expect(inventoryPage.cartBadgeNumber).toHaveText('1');
 
         await inventoryPage.goToCartPage();
@@ -42,7 +41,7 @@ test.describe('Error Messages', () => {
 
         //await cartPage.checkProductName('Sauce Labs Fleece Jacket') 
         await expect(cartPage.cartItem).toHaveCount(1)
-        await expect(cartPage.cartItem).toContainText('Sauce Labs Fleece Jacket');
+        await expect(cartPage.cartItem).toContainText('Sauce Labs Backpack');
 
         await cartPage.navigateToCheckoutPage();
         await checkoutPage.fillCheckoutDetails(NoFirstName.firstname, NoFirstName.lastname, NoFirstName.ZipPostal);

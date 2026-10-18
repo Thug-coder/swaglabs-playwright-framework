@@ -15,17 +15,17 @@ test.describe('Sort Test', () => {
         await expect(inventoryPage.productName.first()).toHaveText('Test.allTheThings() T-Shirt (Red)')
     });
 
-    test('Sort A-Z', async ({ inventoryPage }) => {
+    test('Sort A-Z', async ({ inventoryPage, standardUserWithProduct }) => {
         //const inventoryPage = new InventoryPage(page); we have used fixtures for this
         await inventoryPage.sortBy('az')
     });
 
-    test('Sort Low to High', async ({ inventoryPage }) => {
+    test('Sort Low to High', async ({ inventoryPage, standardUserWithProduct }) => {
         //const inventoryPage = new InventoryPage(page); we have used fixtures for this
         await inventoryPage.sortBy('lohi')
     });
 
-    test('Sort High to Low', async ({ inventoryPage }) => {
+    test('Sort High to Low', async ({ inventoryPage, standardUserWithProduct }) => {
         //const inventoryPage = new InventoryPage(page); we have used fixtures for this
         await inventoryPage.sortBy('hilo')
     });
