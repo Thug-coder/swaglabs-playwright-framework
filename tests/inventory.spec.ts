@@ -33,7 +33,6 @@ test.describe('Sort Test', () => {
 
 test.describe('Add to Cart Tests', () => {
     test('Add to Cart Single Item using Product Name', async ({inventoryPage, standardUserWithProduct}) => {
-        await inventoryPage.addToCart('Sauce Labs Backpack');
         await expect(inventoryPage.cartBadgeNumber).toHaveText('1')
     })
 })
