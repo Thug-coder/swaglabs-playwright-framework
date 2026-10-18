@@ -17,11 +17,11 @@ test.describe('Sort Test', () => {
         const actualNames = await inventoryPage.productName.allInnerTexts();
         console.log(actualNames);
 
-        const azSorted = [...actualNames].sort((a,b) => b.localeCompare(a))
+        const azSorted = [...actualNames].sort((a, b) => b.localeCompare(a))
         console.log(azSorted);
 
         expect(actualNames).toEqual(azSorted)
-        
+
     });
 
     test('Sort A-Z', async ({ inventoryPage, standardUserWithProduct }) => {
@@ -31,7 +31,7 @@ test.describe('Sort Test', () => {
         const actualNames = await inventoryPage.productName.allInnerTexts();
         console.log(actualNames);
 
-        const azSorted = [...actualNames].sort((a,b) => a.localeCompare(b))
+        const azSorted = [...actualNames].sort((a, b) => a.localeCompare(b))
         console.log(azSorted);
 
         expect(actualNames).toEqual(azSorted)
@@ -42,7 +42,7 @@ test.describe('Sort Test', () => {
         await inventoryPage.sortBy('lohi')
 
         const actualPrice = await inventoryPage.productPrice.allInnerTexts();
-        const ascendingActualPrice = [...actualPrice].sort((a,b) => Number(a.replace('$', '')) - Number(b.replace('$','')))
+        const ascendingActualPrice = [...actualPrice].sort((a, b) => Number(a.replace('$', '')) - Number(b.replace('$', '')))
 
         expect(actualPrice).toEqual(ascendingActualPrice);
     });
@@ -52,26 +52,51 @@ test.describe('Sort Test', () => {
         await inventoryPage.sortBy('hilo')
 
         const actualPrice = await inventoryPage.productPrice.allInnerTexts();
-        const ascendingActualPrice = [...actualPrice].sort((a,b) => Number(b.replace('$', '')) - Number(a.replace('$','')))
+        const ascendingActualPrice = [...actualPrice].sort((a, b) => Number(b.replace('$', '')) - Number(a.replace('$', '')))
 
         expect(actualPrice).toEqual(ascendingActualPrice);
     });
 });
 
 test.describe('Add to Cart Tests', () => {
-    test('Add to Cart Single Item using Product Name', async ({inventoryPage, standardUserWithProduct}) => {
+    test('Add and remove Product from Cart', async ({ inventoryPage, standardUserWithProduct }) => {
         await expect(inventoryPage.cartBadgeNumber).toHaveText('1')
+
+        await inventoryPage.removeProductFromCart('Sauce Labs Backpack')
+        await expect(inventoryPage.cartBadgeNumber).toBeHidden();
+    });
+
+    test('Add All Products & Remove All Products', async ({ inventoryPage, loginPage }) => {
+        await loginPage.goto();
+        await loginPage.login(validUser.username, validUser.password);
+        await expect(inventoryPage.pageTitle).toHaveText('Products');
+        const products = await inventoryPage.productName.allInnerTexts();
+
+        for (const product of products) {
+            await inventoryPage.addToCart(product);
+        }
+
+        await expect(inventoryPage.cartBadgeNumber).toHaveText('6')
+
+        const addedProducts = await inventoryPage.productName.allInnerTexts();
+
+        for (const product of products) {
+            await inventoryPage.removeProductFromCart(product)
+        }
+
+        await expect(inventoryPage.cartBadgeNumber).toBeHidden();
+
     })
 })
 
 test.describe('Check Product details', () => {
-    test('Check all products in the page', async ({inventoryPage, standardUserWithProduct}) => {
+    test('Check all products in the page', async ({ inventoryPage, standardUserWithProduct }) => {
         await expect(inventoryPage.productName).toHaveCount(6);
         await expect(inventoryPage.productName).toHaveText(['Sauce Labs Backpack',
-      'Sauce Labs Bike Light',
-      'Sauce Labs Bolt T-Shirt',
-      'Sauce Labs Fleece Jacket',
-      'Sauce Labs Onesie',
-      'Test.allTheThings() T-Shirt (Red)'])
+            'Sauce Labs Bike Light',
+            'Sauce Labs Bolt T-Shirt',
+            'Sauce Labs Fleece Jacket',
+            'Sauce Labs Onesie',
+            'Test.allTheThings() T-Shirt (Red)'])
     })
 })

@@ -9,6 +9,7 @@ export class InventoryPage {
     readonly cartBadgeNumber: Locator;
     readonly sortDropdown: Locator;
     readonly productPrice: Locator;
+    readonly removeProduct: Locator
 
     constructor(page:Page){
         this.page = page;
@@ -17,8 +18,9 @@ export class InventoryPage {
         this.productName = page.locator('.inventory_item_name ');
         this.cartBadge = page.locator('.shopping_cart_link');
         this.cartBadgeNumber = page.locator('.shopping_cart_badge');
-        this.sortDropdown = page.locator('.product_sort_container')
-        this.productPrice = page.locator('.inventory_item_price')
+        this.sortDropdown = page.locator('.product_sort_container');
+        this.productPrice = page.locator('.inventory_item_price');
+        this.removeProduct = page.getByRole('button', {name: 'Remove'})
     }
 
     async sortBy(option: 'az' | 'za' | 'lohi' | 'hilo'): Promise<void>{
@@ -32,5 +34,10 @@ export class InventoryPage {
 
     async goToCartPage():Promise<void>{
         await this.cartBadge.click();
+    }
+
+    async removeProductFromCart(productName:string){
+        const product = this.page.locator('.inventory_item').filter({has:this.page.getByText(productName, {exact:true})});
+        await product.getByRole('button', {name: 'Remove'}).click();
     }
 }
