@@ -33,7 +33,7 @@ test.describe('Checkout Testcases', () => {
 })
 
 test.describe('Error Messages', () => {
-    test('Error messages testcases', async ({inventoryPage, cartPage, checkoutPage}) => {
+    test('Error messages testcases', async ({inventoryPage, cartPage, checkoutPage, standardUserWithProduct}) => {
         await inventoryPage.addToCart('Sauce Labs Fleece Jacket');
         await expect(inventoryPage.cartBadgeNumber).toHaveText('1');
 
