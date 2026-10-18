@@ -8,6 +8,7 @@ export class InventoryPage {
     readonly cartBadge: Locator;
     readonly cartBadgeNumber: Locator;
     readonly sortDropdown: Locator;
+    readonly productPrice: Locator;
 
     constructor(page:Page){
         this.page = page;
@@ -17,6 +18,7 @@ export class InventoryPage {
         this.cartBadge = page.locator('.shopping_cart_link');
         this.cartBadgeNumber = page.locator('.shopping_cart_badge');
         this.sortDropdown = page.locator('.product_sort_container')
+        this.productPrice = page.locator('.inventory_item_price')
     }
 
     async sortBy(option: 'az' | 'za' | 'lohi' | 'hilo'): Promise<void>{

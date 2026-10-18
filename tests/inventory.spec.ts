@@ -13,21 +13,48 @@ test.describe('Sort Test', () => {
         //const inventoryPage = new InventoryPage(page); we have used fixtures for this
         await inventoryPage.sortBy('za')
         await expect(inventoryPage.productName.first()).toHaveText('Test.allTheThings() T-Shirt (Red)')
+
+        const actualNames = await inventoryPage.productName.allInnerTexts();
+        console.log(actualNames);
+
+        const azSorted = [...actualNames].sort((a,b) => b.localeCompare(a))
+        console.log(azSorted);
+
+        expect(actualNames).toEqual(azSorted)
+        
     });
 
     test('Sort A-Z', async ({ inventoryPage, standardUserWithProduct }) => {
         //const inventoryPage = new InventoryPage(page); we have used fixtures for this
         await inventoryPage.sortBy('az')
+
+        const actualNames = await inventoryPage.productName.allInnerTexts();
+        console.log(actualNames);
+
+        const azSorted = [...actualNames].sort((a,b) => a.localeCompare(b))
+        console.log(azSorted);
+
+        expect(actualNames).toEqual(azSorted)
     });
 
     test('Sort Low to High', async ({ inventoryPage, standardUserWithProduct }) => {
         //const inventoryPage = new InventoryPage(page); we have used fixtures for this
         await inventoryPage.sortBy('lohi')
+
+        const actualPrice = await inventoryPage.productPrice.allInnerTexts();
+        const ascendingActualPrice = [...actualPrice].sort((a,b) => Number(a.replace('$', '')) - Number(b.replace('$','')))
+
+        expect(actualPrice).toEqual(ascendingActualPrice);
     });
 
     test('Sort High to Low', async ({ inventoryPage, standardUserWithProduct }) => {
         //const inventoryPage = new InventoryPage(page); we have used fixtures for this
         await inventoryPage.sortBy('hilo')
+
+        const actualPrice = await inventoryPage.productPrice.allInnerTexts();
+        const ascendingActualPrice = [...actualPrice].sort((a,b) => Number(b.replace('$', '')) - Number(a.replace('$','')))
+
+        expect(actualPrice).toEqual(ascendingActualPrice);
     });
 });
 
