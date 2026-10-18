@@ -12,10 +12,18 @@ export default defineConfig({
 
   workers: process.env.CI ? 2 : undefined,
 
-  reporter: [
-    ['list'],
-    ['html', { open: 'never' }],
-  ],
+  
+reporter: process.env.CI
+  ? [
+      ['list'],
+      ['html', { open: 'never' }],
+      ['json', { outputFile: 'test-results/results.json' }],
+      ['github'],
+    ]
+  : [
+      ['list'],
+      ['html', { open: 'never' }],
+    ],
 
   use: {
     baseURL: 'https://www.saucedemo.com/',
