@@ -2,14 +2,11 @@ import { test, expect } from '../src/fixtures/testFixtures'
 import { validUser } from '../src/data/loginTestUsers';
 import { InventoryPage } from '../src/pages/Inventory';
 
-// test.beforeEach(async ({ loginPage, inventoryPage }) => {
-//     await loginPage.goto();
-//     await loginPage.login(validUser.username, validUser.password);
-//     await expect(inventoryPage.pageTitle).toHaveText('Products');
-// })
+test.beforeEach(async ({standardUserLogin}) => {
+})
 
 test.describe('Sort Test', () => {
-    test('Sort Z-A', async ({ inventoryPage, standardUserWithProduct }) => {
+    test('Sort Z-A', async ({ inventoryPage}) => {
         //const inventoryPage = new InventoryPage(page); we have used fixtures for this
         await inventoryPage.sortBy('za')
         await expect(inventoryPage.productName.first()).toHaveText('Test.allTheThings() T-Shirt (Red)')
@@ -24,7 +21,7 @@ test.describe('Sort Test', () => {
 
     });
 
-    test('Sort A-Z', async ({ inventoryPage, standardUserWithProduct }) => {
+    test('Sort A-Z', async ({ inventoryPage }) => {
         //const inventoryPage = new InventoryPage(page); we have used fixtures for this
         await inventoryPage.sortBy('az')
 
@@ -37,7 +34,7 @@ test.describe('Sort Test', () => {
         expect(actualNames).toEqual(azSorted)
     });
 
-    test('Sort Low to High', async ({ inventoryPage, standardUserWithProduct }) => {
+    test('Sort Low to High', async ({ inventoryPage }) => {
         //const inventoryPage = new InventoryPage(page); we have used fixtures for this
         await inventoryPage.sortBy('lohi')
 
@@ -47,7 +44,7 @@ test.describe('Sort Test', () => {
         expect(actualPrice).toEqual(ascendingActualPrice);
     });
 
-    test('Sort High to Low', async ({ inventoryPage, standardUserWithProduct }) => {
+    test('Sort High to Low', async ({ inventoryPage }) => {
         //const inventoryPage = new InventoryPage(page); we have used fixtures for this
         await inventoryPage.sortBy('hilo')
 
@@ -59,16 +56,15 @@ test.describe('Sort Test', () => {
 });
 
 test.describe('Add to Cart Tests', () => {
-    test('Add and remove Product from Cart', async ({ inventoryPage, standardUserWithProduct }) => {
+    test('Add and remove Product from Cart', async ({ inventoryPage }) => {
+        await inventoryPage.addToCart('Sauce Labs Backpack')
         await expect(inventoryPage.cartBadgeNumber).toHaveText('1')
 
         await inventoryPage.removeProductFromCart('Sauce Labs Backpack')
         await expect(inventoryPage.cartBadgeNumber).toBeHidden();
     });
 
-    test('Add All Products & Remove All Products', async ({ inventoryPage, loginPage }) => {
-        await loginPage.goto();
-        await loginPage.login(validUser.username, validUser.password);
+    test('Add All Products & Remove All Products', async ({ inventoryPage}) => {
         await expect(inventoryPage.pageTitle).toHaveText('Products');
         const products = await inventoryPage.productName.allInnerTexts();
 
@@ -80,7 +76,7 @@ test.describe('Add to Cart Tests', () => {
 
         const addedProducts = await inventoryPage.productName.allInnerTexts();
 
-        for (const product of products) {
+        for (const product of addedProducts) {
             await inventoryPage.removeProductFromCart(product)
         }
 
@@ -90,7 +86,7 @@ test.describe('Add to Cart Tests', () => {
 })
 
 test.describe('Check Product details', () => {
-    test('Check all products in the page', async ({ inventoryPage, standardUserWithProduct }) => {
+    test('Check all products in the page', async ({ inventoryPage }) => {
         await expect(inventoryPage.productName).toHaveCount(6);
         await expect(inventoryPage.productName).toHaveText(['Sauce Labs Backpack',
             'Sauce Labs Bike Light',

@@ -8,8 +8,11 @@ import { validUser } from '../src/data/loginTestUsers';
 //     await expect(inventoryPage.pageTitle).toHaveText('Products');
 // })
 
+test.beforeEach(async ({standardUserWith1ProductAddToCart}) => {
+});
+
 test.describe('Cart Page', () => {
-    test('Navigate to Cart Page', async ({cartPage,inventoryPage,standardUserWithProduct}) => {
+    test('Navigate to Cart Page', async ({cartPage,inventoryPage}) => {
         await expect(inventoryPage.cartBadgeNumber).toHaveText('1');
 
         await inventoryPage.goToCartPage();

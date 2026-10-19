@@ -9,7 +9,7 @@ import { ValidInformation, NoFirstName } from '../src/data/testUserData';
 // })
 
 test.describe('Checkout Testcases', () => {
-    test('Checkout Flow', async ({standardUserWithProduct, inventoryPage, cartPage, checkoutPage}) => {
+    test('Checkout Flow', async ({standardUserWith1ProductAddToCart, inventoryPage, cartPage, checkoutPage}) => {
         await expect(inventoryPage.cartBadgeNumber).toHaveText('1');
 
         await inventoryPage.goToCartPage();
@@ -33,7 +33,7 @@ test.describe('Checkout Testcases', () => {
 })
 
 test.describe('Error Messages', () => {
-    test('Error messages testcases', async ({inventoryPage, cartPage, checkoutPage, standardUserWithProduct}) => {
+    test('Error messages testcases', async ({inventoryPage, cartPage, checkoutPage, standardUserWith1ProductAddToCart}) => {
         await expect(inventoryPage.cartBadgeNumber).toHaveText('1');
 
         await inventoryPage.goToCartPage();
