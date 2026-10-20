@@ -4,12 +4,14 @@ import { InventoryPage } from '../pages/Inventory';
 import { CartPage } from '../pages/CartPage';
 import { CheckoutPage } from '../pages/CheckoutPage';
 import { validUser } from '../data/loginTestUsers';
+import { AboutUsPage } from '../pages/AboutusPage';
 
 type FrameworkFixtures = {
     loginPage: LoginPage;
     inventoryPage: InventoryPage;
     cartPage: CartPage;
     checkoutPage: CheckoutPage;
+    aboutusPage: AboutUsPage;
     standardUserLogin: void;
     standardUserWith1ProductAddToCart: void
 };
@@ -33,6 +35,11 @@ export const test = base.extend<FrameworkFixtures>({
     checkoutPage: async ({ page }, use) => {
         const checkoutPage = new CheckoutPage(page);
         use(checkoutPage)
+    },
+
+    aboutusPage: async ({ page }, use) => {
+        const aboutusPage = new AboutUsPage(page);
+        use(aboutusPage)
     },
 
     standardUserLogin: async (

@@ -1,12 +1,22 @@
 import { test, expect } from '../src/fixtures/testFixtures'
-import { validUser } from '../src/data/loginTestUsers';
-import { InventoryPage } from '../src/pages/Inventory';
 
-test.beforeEach(async ({standardUserLogin}) => {
+test.beforeEach(async ({ standardUserLogin }) => {
+})
+
+test.describe('Check Product details', () => {
+    test('Check all products in the page', async ({ inventoryPage }) => {
+        await expect(inventoryPage.productName).toHaveCount(6);
+        await expect(inventoryPage.productName).toHaveText(['Sauce Labs Backpack',
+            'Sauce Labs Bike Light',
+            'Sauce Labs Bolt T-Shirt',
+            'Sauce Labs Fleece Jacket',
+            'Sauce Labs Onesie',
+            'Test.allTheThings() T-Shirt (Red)'])
+    })
 })
 
 test.describe('Sort Test', () => {
-    test('Sort Z-A', async ({ inventoryPage}) => {
+    test('Sort Z-A', async ({ inventoryPage }) => {
         //const inventoryPage = new InventoryPage(page); we have used fixtures for this
         await inventoryPage.sortBy('za')
         await expect(inventoryPage.productName.first()).toHaveText('Test.allTheThings() T-Shirt (Red)')
@@ -64,7 +74,7 @@ test.describe('Add to Cart Tests', () => {
         await expect(inventoryPage.cartBadgeNumber).toBeHidden();
     });
 
-    test('Add All Products & Remove All Products', async ({ inventoryPage}) => {
+    test('Add All Products & Remove All Products', async ({ inventoryPage }) => {
         await expect(inventoryPage.pageTitle).toHaveText('Products');
         const products = await inventoryPage.productName.allInnerTexts();
 
@@ -85,14 +95,16 @@ test.describe('Add to Cart Tests', () => {
     })
 })
 
-test.describe('Check Product details', () => {
-    test('Check all products in the page', async ({ inventoryPage }) => {
-        await expect(inventoryPage.productName).toHaveCount(6);
-        await expect(inventoryPage.productName).toHaveText(['Sauce Labs Backpack',
-            'Sauce Labs Bike Light',
-            'Sauce Labs Bolt T-Shirt',
-            'Sauce Labs Fleece Jacket',
-            'Sauce Labs Onesie',
-            'Test.allTheThings() T-Shirt (Red)'])
-    })
-})
+test.describe('Logout', () => {
+    test('Logout Test', async ({ inventoryPage, loginPage }) => {
+        await inventoryPage.logout();
+        await expect(loginPage.loginButton).toBeVisible();
+    });
+});
+
+test.describe('About Us page', () => {
+    test('About us page Test', async ({ inventoryPage, aboutusPage }) => {
+        await inventoryPage.navigateToAboutUsPage();
+        await expect(aboutusPage.loginTab).toBeVisible();
+    });
+});
