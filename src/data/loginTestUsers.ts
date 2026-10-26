@@ -1,7 +1,7 @@
 export const validUser = {
-    username: 'standard_user',
-    password: 'secret_sauce'
-}
+  username: process.env.SAUCE_USERNAME ?? 'standard_user',
+  password: process.env.SAUCE_PASSWORD ?? 'secret_sauce',
+};
 
 export const invalidPasswordUser = {
     username: 'standard_user',
