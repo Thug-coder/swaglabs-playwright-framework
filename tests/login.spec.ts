@@ -1,8 +1,8 @@
 import { test, expect } from '../src/fixtures/testFixtures'
 import { LoginPage } from '../src/pages/LoginPage';
-import { validUser } from '../src/data/loginTestUsers';
-import { invalidPasswordUser } from '../src/data/loginTestUsers';
-import { lockedoutUser } from '../src/data/loginTestUsers';
+import { validUser } from '../src/data/UI_Test_Data/loginTestUsers';
+import { invalidPasswordUser } from '../src/data/UI_Test_Data/loginTestUsers';
+import { lockedoutUser } from '../src/data/UI_Test_Data/loginTestUsers';
 
 test.beforeEach(async ({ loginPage }) => {
   await loginPage.goto();

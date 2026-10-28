@@ -3,7 +3,7 @@ import { LoginPage } from '../pages/LoginPage'
 import { InventoryPage } from '../pages/Inventory';
 import { CartPage } from '../pages/CartPage';
 import { CheckoutPage } from '../pages/CheckoutPage';
-import { validUser } from '../data/loginTestUsers';
+import { validUser } from '../data/UI_Test_Data/loginTestUsers';
 import { AboutUsPage } from '../pages/AboutusPage';
 
 type FrameworkFixtures = {

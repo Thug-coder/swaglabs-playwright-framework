@@ -1,6 +1,6 @@
 import { test, expect } from '../src/fixtures/testFixtures'
-import { validUser } from '../src/data/loginTestUsers';
-import { ValidInformation, NoFirstName } from '../src/data/testUserData';
+import { validUser } from '../src/data/UI_Test_Data/loginTestUsers';
+import { ValidInformation, NoFirstName } from '../src/data/UI_Test_Data/testUserData';
 
 // test.beforeEach(async ({ loginPage, inventoryPage }) => {
 //     await loginPage.goto();
