@@ -4,3 +4,19 @@ export async function formatAPIRequest(template: string, values: any[]): Promise
         return index < values.length ? String(values[index]) : match;
     });
 }
+
+export async function getPostRequestBody(fname: string, lname: string, tPrice: number, depositpaid: boolean, checkin: string, checkout: string, additionalneeds: string) {
+
+    const apiRequest: BookingAPI = {
+        firstname: fname,
+        lastname: lname,
+        totalprice: tPrice,
+        depositpaid: depositpaid,
+        bookingdates: {
+            checkin: checkin,
+            checkout: checkout
+        },
+        additionalneeds: additionalneeds
+    }
+    return apiRequest
+}
